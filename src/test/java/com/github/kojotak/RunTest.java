@@ -3,6 +3,7 @@ package com.github.kojotak;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumSet;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,5 +40,15 @@ class RunTest {
     @Test
     public void aceCanNotBeUsedInTheMiddle(){
         assertThrows(IllegalStateException.class, () -> new Run(Suit.SPADE, EnumSet.of(Rank.KING, Rank.ACE, Rank.TWO)));
+    }
+
+    @Test
+    public void runFromThreeCards(){
+        var run = new Run(List.of(
+                new Card(Rank.NINE, Suit.CLUB),
+                new Card(Rank.TEN, Suit.CLUB),
+                new Card(Rank.JACK, Suit.CLUB)
+        ));
+        assertEquals(29, run.getPoints());
     }
 }
