@@ -31,7 +31,6 @@ class DeckTest {
         var handSize = hand.getCards().size();
         assertEquals(config.cards(), handSize);
         assertEquals(deckSize - handSize, deck.getCards().size());
-        System.err.println(hand.getCards());
     }
 
     public static Stream<Arguments> supportedConfigs() {

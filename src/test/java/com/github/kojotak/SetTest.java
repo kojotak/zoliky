@@ -49,4 +49,35 @@ class SetTest {
                 new Card(Rank.QUEEN, Suit.CLUB)
                 )));
     }
+
+    @Test
+    public void setFromThreeCards(){
+        var set = new Set(List.of(
+                new Card(Rank.KING, Suit.CLUB),
+                new Card(Rank.KING, Suit.DIAMOND),
+                new Card(Rank.KING, Suit.HEART)
+        ));
+        assertEquals(30, set.getPoints());
+    }
+
+    @Test
+    public void setFromThreeCardsIncludingJoker(){
+        var set = new Set(List.of(
+                new Card(Rank.KING, Suit.CLUB),
+                new Card(Rank.KING, Suit.DIAMOND),
+                new Card(Rank.KING, null)
+        ));
+        assertEquals(30, set.getPoints());
+    }
+
+    //TODO fix this
+//    @Test
+//    public void setCanNotPermitsTwoJokers() {
+//        assertThrows(IllegalStateException.class, () -> new Set(List.of(
+//                new Card(Rank.KING, Suit.CLUB),
+//                new Card(Rank.KING, Suit.DIAMOND),
+//                new Card(Rank.KING, null),
+//                new Card(Rank.KING, null)
+//        )));
+//    }
 }
