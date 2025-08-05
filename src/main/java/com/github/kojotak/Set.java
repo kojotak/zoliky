@@ -2,6 +2,7 @@ package com.github.kojotak;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.github.kojotak.Util.*;
 import static java.util.stream.Collectors.toList;
@@ -33,5 +34,13 @@ public record Set(List<Card> cards) implements Meld, Ranked {
     @Override
     public Rank rank() {
         return uniqueOrFail(cards, Card::rank);
+    }
+
+    @Override
+    public String toString() {
+        return rank().toString() + "[" + cards.stream()
+                .map(Card::suit)
+                .map(suit -> suit != null ? suit.toString() : "*")
+                .collect(Collectors.joining(",")) + "]";
     }
 }

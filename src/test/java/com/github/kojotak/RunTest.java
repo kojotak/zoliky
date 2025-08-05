@@ -2,6 +2,8 @@ package com.github.kojotak;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -103,5 +105,20 @@ class RunTest {
                 new Card(Rank.KING, Suit.CLUB)
         ));
         assertEquals(49, run.getPoints());
+    }
+
+    @Test
+    public void runWithAllRanks(){
+        var run = new Run(Suit.HEART, EnumSet.allOf(Rank.class).stream().toList());
+        assertEquals(2+3+4+5+6+7+8+9+50, run.getPoints());
+    }
+
+    @Test
+    public void runWithAllRanksIncludingOne(){
+        var ranks = new ArrayList<Rank>();
+        ranks.add(Rank.ACE); //acts as one
+        ranks.addAll(EnumSet.allOf(Rank.class));
+        var run = new Run(Suit.HEART, ranks);
+        assertEquals(1+2+3+4+5+6+7+8+9+50, run.getPoints());
     }
 }

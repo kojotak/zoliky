@@ -2,6 +2,7 @@ package com.github.kojotak;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.github.kojotak.Util.uniqueOrFail;
 
@@ -54,7 +55,8 @@ public record Run(List<Card> cards) implements Meld, Suited {
     public int getPoints() {
         var ranks = cards.stream().map(Card::rank).toList();
         var points = ranks.stream().reduce(0, (sum, rank) -> sum + rank.getPoints(), Integer::sum);
-        if (ranks.contains(Rank.ACE) && !ranks.contains(Rank.KING) && ranks.contains(Rank.TWO)) {
+        if (Rank.ACE.equals(cards.getFirst().rank())) {
+            //ace at first position counts as one
             points -= 9;
         }
         return points;
@@ -63,5 +65,13 @@ public record Run(List<Card> cards) implements Meld, Suited {
     @Override
     public Suit suit() {
         return uniqueOrFail(cards, Card::suit);
+    }
+
+    @Override
+    public String toString() {
+        return  suit().toString() + "[" + cards.stream()
+                .map(Card::rank)
+                .map(Rank::toString)
+                .collect(Collectors.joining(",")) + "]";
     }
 }

@@ -23,6 +23,6 @@ public record Card(
     public String toString() {
         return this.isJoker()
                 ? "JOKER"
-                : rank.getSign() + suit.getSign();
+                : "" + rank + suit;
     }
 }

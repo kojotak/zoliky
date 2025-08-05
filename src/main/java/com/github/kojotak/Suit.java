@@ -1,6 +1,7 @@
 package com.github.kojotak;
 
-public enum Suit implements Signed {
+public enum Suit {
+
     HEART("♥"),
     CLUB("♣"),
     DIAMOND("♦"),
@@ -8,11 +9,12 @@ public enum Suit implements Signed {
 
     String sign;
 
-    public String getSign() {
-        return sign;
-    }
-
     Suit(String sign){
         this.sign = sign;
+    }
+
+    @Override
+    public String toString(){
+        return sign;
     }
 }
