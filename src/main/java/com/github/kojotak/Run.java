@@ -1,12 +1,11 @@
 package com.github.kojotak;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.kojotak.Util.uniqueOrFail;
 
-public record Run(List<Card> cards) implements Meld, Suited {
+public record Run(List<Card> cards) implements Meld {
 
     public Run(Suit suit, List<Rank> ranks) {
         this(ranks.stream().map(r -> new Card(r, suit)).toList());
@@ -46,7 +45,6 @@ public record Run(List<Card> cards) implements Meld, Suited {
 
     }
 
-    @Override
     public List<Card> getCards() {
         return cards;
     }
@@ -62,14 +60,13 @@ public record Run(List<Card> cards) implements Meld, Suited {
         return points;
     }
 
-    @Override
     public Suit suit() {
         return uniqueOrFail(cards, Card::suit);
     }
 
     @Override
     public String toString() {
-        return  suit().toString() + "[" + cards.stream()
+        return  suit() + "[" + cards.stream()
                 .map(Card::rank)
                 .map(Rank::toString)
                 .collect(Collectors.joining(",")) + "]";

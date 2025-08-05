@@ -1,15 +1,14 @@
 package com.github.kojotak;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.kojotak.Util.*;
 import static java.util.stream.Collectors.toList;
 
-public record Set(List<Card> cards) implements Meld, Ranked {
+public record Set(List<Card> cards) implements Meld {
 
-    public Set(Rank rank, EnumSet<Suit> suits) {
+    public Set(Rank rank, List<Suit> suits) {
         this(suits.stream().map(suit -> new Card(rank, suit)).toList());
     }
 
@@ -21,7 +20,6 @@ public record Set(List<Card> cards) implements Meld, Ranked {
         }
     }
 
-    @Override
     public List<Card> getCards() {
         return cards;
     }
@@ -31,14 +29,13 @@ public record Set(List<Card> cards) implements Meld, Ranked {
         return rank().getPoints() * cards.size();
     }
 
-    @Override
     public Rank rank() {
         return uniqueOrFail(cards, Card::rank);
     }
 
     @Override
     public String toString() {
-        return rank().toString() + "[" + cards.stream()
+        return rank() + "[" + cards.stream()
                 .map(Card::suit)
                 .map(suit -> suit != null ? suit.toString() : "*")
                 .collect(Collectors.joining(",")) + "]";

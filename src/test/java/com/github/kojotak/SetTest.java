@@ -11,34 +11,34 @@ class SetTest {
 
     @Test
     public void fullSetOfFives(){
-        var set = new Set(Rank.FIVE, EnumSet.allOf(Suit.class));
+        var set = new Set(Rank.FIVE, EnumSet.allOf(Suit.class).stream().toList());
         assertEquals(4*5, set.getPoints());
     }
 
     @Test
     public void threeAces(){
-        var set = new Set(Rank.ACE, EnumSet.of(Suit.CLUB, Suit.DIAMOND, Suit.HEART));
+        var set = new Set(Rank.ACE, List.of(Suit.CLUB, Suit.DIAMOND, Suit.HEART));
         assertEquals(30, set.getPoints());
     }
 
     @Test
     public void illegalSetOfDuplicatedSuits(){
-        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, EnumSet.of(Suit.CLUB, Suit.CLUB, Suit.HEART)));
+        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, List.of(Suit.CLUB, Suit.CLUB, Suit.HEART)));
     }
 
     @Test
     public void illegalSetOfTwoSuits(){
-        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, EnumSet.of(Suit.CLUB, Suit.DIAMOND)));
+        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, List.of(Suit.CLUB, Suit.DIAMOND)));
     }
 
     @Test
     public void illegalSetOfOneSuit(){
-        assertThrows(IllegalStateException.class, () -> new Set(Rank.KING, EnumSet.of(Suit.HEART)));
+        assertThrows(IllegalStateException.class, () -> new Set(Rank.KING, List.of(Suit.HEART)));
     }
 
     @Test
     public void illegalEmptySet(){
-        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, EnumSet.noneOf(Suit.class)));
+        assertThrows(IllegalStateException.class, () -> new Set(Rank.ACE, List.of()));
     }
 
     @Test

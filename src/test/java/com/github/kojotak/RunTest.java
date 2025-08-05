@@ -3,7 +3,6 @@ package com.github.kojotak;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -29,7 +28,7 @@ class RunTest {
     }
 
     @Test
-    public void illegalRunOfNonConsecutives(){
+    public void illegalRunOfNonConsecutive(){
         assertThrows(IllegalStateException.class, () -> new Run(Suit.DIAMOND, List.of(Rank.FIVE, Rank.SEVEN, Rank.EIGHT)));
     }
 

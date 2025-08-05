@@ -11,7 +11,7 @@ import org.jspecify.annotations.Nullable;
  */
 public record Card(
         @Nullable Rank rank, @Nullable Suit suit
-) implements Ranked, Suited {
+) {
 
     public static final Card JOKER = new Card(null, null);
 

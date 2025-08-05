@@ -19,11 +19,7 @@ public class RankTest {
             case SEVEN -> 7;
             case EIGHT -> 8;
             case NINE -> 9;
-            case TEN -> 10;
-            case JACK -> 10;
-            case QUEEN -> 10;
-            case KING -> 10;
-            case ACE -> 10;
+            case TEN, JACK, QUEEN, ACE, KING -> 10;
         }, rank.getPoints());
     }
 }

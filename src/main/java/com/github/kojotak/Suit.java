@@ -7,7 +7,7 @@ public enum Suit {
     DIAMOND("♦"),
     SPADE("♠");
 
-    String sign;
+    private final String sign;
 
     Suit(String sign){
         this.sign = sign;

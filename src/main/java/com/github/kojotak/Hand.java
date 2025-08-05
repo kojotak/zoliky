@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Cards holding by one player
  */
-public class Hand implements CardCarrier {
+public class Hand {
 
     private final LinkedList<Card> cards = new LinkedList<>();
 

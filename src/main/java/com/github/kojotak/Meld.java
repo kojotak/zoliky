@@ -2,13 +2,11 @@ package com.github.kojotak;
 
 import java.util.List;
 
-public interface Meld extends Valuable, CardCarrier {
+public interface Meld {
 
     List<Card> getCards();
 
-    int MINIMUM_LENGTH = 3;
+    int getPoints();
 
-    default int getActualLength(){
-        return getCards().size();
-    }
+    int MINIMUM_LENGTH = 3;
 }

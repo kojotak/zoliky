@@ -1,6 +1,6 @@
 package com.github.kojotak;
 
-public enum Rank implements Valuable {
+public enum Rank {
 
     TWO,
     THREE,
@@ -16,7 +16,6 @@ public enum Rank implements Valuable {
     KING,
     ACE;
 
-    @Override
     public int getPoints(){
         return switch (this){
             case ACE, KING, QUEEN, JACK, TEN -> 10;

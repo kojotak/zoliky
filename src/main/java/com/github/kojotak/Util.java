@@ -1,5 +1,7 @@
 package com.github.kojotak;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +19,8 @@ class Util {
         return result;
     }
 
-    static <T, F> T uniqueOrFail(List<F> list, Function<F,T> mapper) {
+    @Nullable
+    static <T, F> T uniqueOrFail(List<F> list, Function<F,@Nullable T> mapper) {
         var distinct = list.stream().map(mapper).filter(Objects::nonNull).distinct().toList();
         if (distinct.size() != 1) {
             throw new IllegalStateException("Non unique " + distinct);
