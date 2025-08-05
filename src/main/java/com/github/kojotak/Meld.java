@@ -2,7 +2,7 @@ package com.github.kojotak;
 
 import java.util.List;
 
-public interface Meld extends Valuable {
+public interface Meld extends Valuable, CardCarrier {
 
     List<Card> getCards();
 

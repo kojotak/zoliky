@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Deck {
+public class Deck implements CardCarrier {
 
     private final LinkedList<Card> cards = new LinkedList<>();
     private final Config config;
@@ -25,6 +25,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    @Override
     public List<Card> getCards() {
         return cards;
     }

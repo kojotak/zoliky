@@ -4,62 +4,64 @@ import java.util.EnumSet;
 import java.util.List;
 
 import static com.github.kojotak.Util.uniqueOrFail;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toSet;
 
-public record Run (
+public record Run(List<Card> cards) implements Meld, Suited {
 
-        Suit suit, EnumSet<Rank> ranks
-
-) implements Meld {
-
-    public Run(List<Card> cards) {
-        this(uniqueOrFail(cards, Card::suit),
-            cards.stream().map(Card::rank)
-                    .collect(collectingAndThen(toSet(), EnumSet::copyOf)));
+    public Run(Suit suit, List<Rank> ranks) {
+        this(ranks.stream().map(r -> new Card(r, suit)).toList());
     }
 
     public Run {
-        if (ranks == null || ranks.size() < MINIMUM_LENGTH) {
+        if (cards.size() < MINIMUM_LENGTH) {
             throw new IllegalStateException("Illegal run - minimum length violated");
         }
-        var ordinals = ranks.stream().map(Rank::ordinal).sorted().toList();
-        var allRanks = Rank.values();
-        var ranksCount = allRanks.length;
-        int predecessors = 0;
-        int successors = 0;
-        for (int index = 0; index < ordinals.size(); index++) {
-            var ordinal = ordinals.get(index);
-            var predecessor = ordinal > 0 ? allRanks[ordinal - 1] : allRanks[ranksCount-1];
-            if(ranks.contains(predecessor)){
-                predecessors += 1;
+        var iterator = cards.listIterator();
+        while (iterator.hasNext()) {
+            Card previous = null;
+            if (iterator.hasPrevious()) {
+                previous = iterator.previous();
+                iterator.next();
             }
-            var successor = ordinal +1 < ranksCount ? allRanks[ordinal + 1] : allRanks[0];
-            if (ranks.contains(successor)) {
-                successors += 1;
+            Card current = iterator.next();
+            if (previous == null) {
+                continue;
             }
-            if(Rank.ACE.equals(allRanks[ordinal])){
-                if(ranks.contains(Rank.TWO) && ranks.contains(Rank.KING)){
-                    throw new IllegalStateException("Illegal run - ace can not be in the middle");
-                }
+            if (Rank.ACE.equals(current.rank()) && Rank.KING.equals(previous.rank()) && iterator.hasNext()) {
+                throw new IllegalStateException("Illegal run - ace can not be in the middle");
+            }
+            if (current.isJoker() && previous.isJoker()) {
+                throw new IllegalStateException("Illegal run - jokers can not be consecutive");
+            }
+            var previousOrdinal = previous.rank().ordinal();
+            var currentOrdinal = current.rank().ordinal();
+
+            if (Rank.ACE.equals(previous.rank()) && Rank.TWO.equals(current.rank())) {
+                previousOrdinal = -1;
+            }
+            if (previousOrdinal + 1 != currentOrdinal) {
+                throw new IllegalStateException("Illegal run - missing some predecessor or successor");
             }
         }
-        if (predecessors != successors || predecessors != ordinals.size()-1 || successors != ordinals.size()-1) {
-            throw new IllegalStateException("Illegal run - missing some predecessor or successor");
-        }
+
     }
 
     @Override
     public List<Card> getCards() {
-        return ranks.stream().map(rank -> new Card(rank, suit)).toList();
+        return cards;
     }
 
     @Override
     public int getPoints() {
+        var ranks = cards.stream().map(Card::rank).toList();
         var points = ranks.stream().reduce(0, (sum, rank) -> sum + rank.getPoints(), Integer::sum);
-        if(ranks.contains(Rank.ACE) && !ranks.contains(Rank.KING) && ranks.contains(Rank.TWO)){
+        if (ranks.contains(Rank.ACE) && !ranks.contains(Rank.KING) && ranks.contains(Rank.TWO)) {
             points -= 9;
         }
         return points;
+    }
+
+    @Override
+    public Suit suit() {
+        return uniqueOrFail(cards, Card::suit);
     }
 }

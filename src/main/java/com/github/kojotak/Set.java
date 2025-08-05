@@ -1,35 +1,37 @@
 package com.github.kojotak;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import static com.github.kojotak.Util.*;
 import static java.util.stream.Collectors.toList;
 
-public record Set(
+public record Set(List<Card> cards) implements Meld, Ranked {
 
-        Rank rank, java.util.Set<Suit> suits
-
-) implements Meld {
-
-    public Set(List<Card> cards){
-        this(uniqueOrFail(cards, Card::rank),
-             uniqueSetOrFail(cards.stream().map(Card::suit).collect(toList()))
-        );
+    public Set(Rank rank, EnumSet<Suit> suits) {
+        this(suits.stream().map(suit -> new Card(rank, suit)).toList());
     }
 
     public Set {
-        if (suits == null || suits.size() < MINIMUM_LENGTH) {
+        uniqueOrFail(cards, Card::rank);
+        var suits = uniqueSetOrFail(cards.stream().map(Card::suit).collect(toList()));
+        if (suits.size() < MINIMUM_LENGTH) {
             throw new IllegalStateException("Illegal set - minimum length violated");
         }
     }
 
     @Override
     public List<Card> getCards() {
-        return suits.stream().map( suit -> new Card(rank, suit)).toList();
+        return cards;
     }
 
     @Override
     public int getPoints() {
-        return rank.getPoints() * suits.size();
+        return rank().getPoints() * cards.size();
+    }
+
+    @Override
+    public Rank rank() {
+        return uniqueOrFail(cards, Card::rank);
     }
 }
