@@ -10,7 +10,7 @@ public record Card (
     public static final Card JOKER = new Card(null, null);
 
     public boolean isJoker(){
-        return suit == null;
+        return suit == null || rank == null;
     }
 
     @Override

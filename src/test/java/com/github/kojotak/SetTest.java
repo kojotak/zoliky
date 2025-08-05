@@ -65,19 +65,37 @@ class SetTest {
         var set = new Set(List.of(
                 new Card(Rank.KING, Suit.CLUB),
                 new Card(Rank.KING, Suit.DIAMOND),
-                new Card(Rank.KING, null)
+                Card.JOKER
         ));
         assertEquals(30, set.getPoints());
     }
 
-    //TODO fix this
-//    @Test
-//    public void setCanNotPermitsTwoJokers() {
-//        assertThrows(IllegalStateException.class, () -> new Set(List.of(
-//                new Card(Rank.KING, Suit.CLUB),
-//                new Card(Rank.KING, Suit.DIAMOND),
-//                new Card(Rank.KING, null),
-//                new Card(Rank.KING, null)
-//        )));
-//    }
+    @Test
+    public void setCanNotPermitsTwoConsecutiveJokers() {
+        assertThrows(IllegalStateException.class, () -> new Set(List.of(
+                new Card(Rank.KING, Suit.CLUB),
+                new Card(Rank.KING, Suit.DIAMOND),
+                Card.JOKER,
+                Card.JOKER
+        )));
+    }
+
+    @Test
+    public void setCanNotPermitsTwoJokers() {
+        assertThrows(IllegalStateException.class, () -> new Set(List.of(
+                new Card(Rank.KING, Suit.CLUB),
+                Card.JOKER,
+                new Card(Rank.KING, Suit.DIAMOND),
+                Card.JOKER
+        )));
+    }
+
+    @Test
+    public void setCanNotPermitJustOneNonJokerCard() {
+        assertThrows(IllegalStateException.class, () -> new Set(List.of(
+                Card.JOKER,
+                new Card(Rank.ACE, Suit.HEART),
+                Card.JOKER
+        )));
+    }
 }

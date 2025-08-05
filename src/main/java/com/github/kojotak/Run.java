@@ -3,6 +3,7 @@ package com.github.kojotak;
 import java.util.EnumSet;
 import java.util.List;
 
+import static com.github.kojotak.Util.uniqueOrFail;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 
@@ -13,7 +14,9 @@ public record Run (
 ) implements Meld {
 
     public Run(List<Card> cards) {
-        this(uniqueSuitOrFail(cards), cards.stream().map(Card::rank).collect(collectingAndThen(toSet(), EnumSet::copyOf)));
+        this(uniqueOrFail(cards, Card::suit),
+            cards.stream().map(Card::rank)
+                    .collect(collectingAndThen(toSet(), EnumSet::copyOf)));
     }
 
     public Run {
@@ -44,14 +47,6 @@ public record Run (
         if (predecessors != successors || predecessors != ordinals.size()-1 || successors != ordinals.size()-1) {
             throw new IllegalStateException("Illegal run - missing some predecessor or successor");
         }
-    }
-
-    private static Suit uniqueSuitOrFail(List<Card> cards) {
-        var suits = cards.stream().map(Card::suit).distinct().toList();
-        if (suits.size() != 1) {
-            throw new IllegalStateException("Illegal run");
-        }
-        return suits.getFirst();
     }
 
     @Override
