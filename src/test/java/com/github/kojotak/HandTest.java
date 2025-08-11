@@ -18,6 +18,20 @@ class HandTest {
     }
 
     @Test
+    public void getLayOutFromRunOfLength4(){
+        var hand = new Hand(List.of(CJ, CQ, CK, CA));
+        var layOuts = hand.getLayOuts();
+        System.err.println(layOuts);
+        assertEquals(3, layOuts.size());
+        assertEquals(new Run(List.of(CJ, CQ, CK)), layOuts.getFirst().cleanRun());
+        assertEquals(new Run(List.of(CJ, CQ, CK, CA)), layOuts.get(1).cleanRun());
+        assertEquals(new Run(List.of(CQ, CK, CA)), layOuts.get(2).cleanRun());
+        assertEquals(List.of(CA), layOuts.getFirst().dump());
+        assertEquals(List.of(), layOuts.get(1).dump());
+        assertEquals(List.of(CJ), layOuts.get(2).dump());
+    }
+
+    @Test
     public void noLayOutFromImpossibleHand(){
         var hand = new Hand(List.of(HJ, CQ, DK, SA));
         var layOuts = hand.getLayOuts();
