@@ -7,6 +7,10 @@ import static com.github.kojotak.Util.uniqueOrFail;
 
 public record Run(List<Card> cards) implements Meld {
 
+    public Run(Card ... cards){
+        this(List.of(cards));
+    }
+
     public Run(Suit suit, List<Rank> ranks) {
         this(ranks.stream().map(r -> new Card(r, suit)).toList());
     }

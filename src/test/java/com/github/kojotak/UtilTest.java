@@ -45,4 +45,18 @@ class UtilTest {
     public void nonUniqueWithNullsThrowAnException() {
         assertThrows(IllegalStateException.class, () -> uniqueOrFail(asList(1, null, 2, null, 3), Function.identity()));
     }
+
+    @Test
+    public void differenceSomeCards(){
+        var origin = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.KING, Suit.CLUB));
+        var difference = Util.difference(origin, List.of(new Card(Rank.ACE, Suit.CLUB)));
+        assertEquals(List.of(new Card(Rank.KING, Suit.CLUB)), difference);
+    }
+
+    @Test
+    public void differenceWithEmptyIsTheOrigin(){
+        var origin = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.KING, Suit.CLUB), Card.JOKER);
+        var difference = Util.difference(origin, List.of());
+        assertEquals(origin, difference);
+    }
 }
