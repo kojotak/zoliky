@@ -29,13 +29,13 @@ public class Hand {
     }
 
     public List<LayOut> getLayOuts(){
-        if (cards == null || cards.isEmpty()) {
+        if (cards.isEmpty()) {
             return List.of();
         }
         var nonJokers = cards.stream()
                 .filter(c -> !c.isJoker())
                 .toList();
-        if (nonJokers.size() < 3) {
+        if (nonJokers.size() < Meld.MINIMUM_LENGTH) {
             return List.of();
         }
 
@@ -65,17 +65,18 @@ public class Hand {
                 int end = i; // exclusive
 
                 int blockLen = end - start;
-                if (blockLen >= 3) {
+                if (blockLen >= Meld.MINIMUM_LENGTH) {
                     // Generate all contiguous sub-layOuts of length >= 3 within this block
-                    for (int s = start; s <= end - 3; s++) {
-                        for (int e = s + 3; e <= end; e++) {
-                            List<Card> run = new ArrayList<>(e - s);
+                    for (int s = start; s <= end - Meld.MINIMUM_LENGTH; s++) {
+                        for (int e = s + Meld.MINIMUM_LENGTH; e <= end; e++) {
+                            List<Card> cleanRun = new ArrayList<>(e - s);
                             for (int idx = s; idx < e; idx++) {
                                 int rank = sortedRanks.get(idx);
                                 // Pick one representative card for this rank
-                                run.add(byRank.get(rank).get(0));
+                                cleanRun.add(byRank.get(rank).get(0));
                             }
-                            layOuts.add(new LayOut(new Run(run), Util.difference(cards, run)));
+                            var remaining = Util.difference(cards, cleanRun);
+                            layOuts.add(new LayOut(new Run(cleanRun), remaining));
                         }
                     }
                 }

@@ -78,6 +78,7 @@ public record Card(
     public static Card jokerFor(Rank rank){
         return new Card(rank, null);
     }
+
     @Override
     public String toString() {
         return this.isJoker()
