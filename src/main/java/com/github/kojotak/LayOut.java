@@ -1,9 +1,11 @@
 package com.github.kojotak;
 
+ import org.jspecify.annotations.Nullable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record LayOut(Run cleanRun, List<Card> dump, Meld... melds) {
+public record LayOut(Run cleanRun, List<Card> dump, @Nullable Meld... melds) {
 
     @Override
     public String toString() {

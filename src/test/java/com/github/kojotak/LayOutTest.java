@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LayOutTest {
 
     @Test
-    public void testLayOutGetPoits(){
+    public void testLayOutGetPoints(){
      var layOut = new LayOut(
        new Run(D2, D3, D4),
        List.of(HQ, JOKER, SA),
@@ -18,6 +18,15 @@ class LayOutTest {
        new Set(Rank.ACE, List.of(Suit.CLUB, Suit.DIAMOND, Suit.HEART))
      );
      assertEquals((2+3+4)+(7+8+9)+30, layOut.getPoints());
+    }
+
+    @Test
+    public void testLayOutGetPointsWithoutMelds(){
+        var layOut = new LayOut(
+                new Run(S10, SJ, SQ, SK, SA),
+                List.of(HQ, JOKER, SA)
+        );
+        assertEquals(50, layOut.getPoints());
     }
 
 }

@@ -14,13 +14,13 @@ class RunTest {
     @Test
     public void runOfThreeFromFive() {
         var run = new Run(H5, H6, H7);
-        assertEquals(3 * 6, run.getPoints());
+        assertEquals(18, run.getPoints());
     }
 
     @Test
     public void runOfFromNineToAce() {
         var run = new Run(Suit.SPADE, List.of(Rank.NINE, Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING, Rank.ACE));
-        assertEquals(9 + 5 * 10, run.getPoints());
+        assertEquals(59, run.getPoints());
     }
 
     @Test
