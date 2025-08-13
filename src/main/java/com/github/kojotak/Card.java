@@ -93,16 +93,16 @@ public record Card(
         Objects.requireNonNull(other, "other");
 
         // 1) Jokers first
-        boolean j1 = this.isJoker();
-        boolean j2 = other.isJoker();
-        if (j1 != j2) return j1 ? -1 : 1; //one of them is joker
-        if (j1) return 0; // both are jokers
+        boolean thisJoker = this.isJoker();
+        boolean otherJoker = other.isJoker();
+        if (thisJoker != otherJoker) return thisJoker ? -1 : 1; //one of them is joker
+        if (thisJoker) return 0; // both are jokers
 
         // 2) compare suits
-        int suitCmp = this.getSuitOrder().compareTo(other.getSuitOrder());
-        if (suitCmp != 0) return suitCmp;
+        int suitComparison = this.getSuitOrder().compareTo(other.getSuitOrder());
+        if (suitComparison != 0) return suitComparison;
 
-        // 3) comapre ranks
+        // 3) compare ranks
         return this.getRankOrder().compareTo(other.getRankOrder());
     }
 
