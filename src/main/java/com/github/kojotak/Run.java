@@ -26,7 +26,7 @@ public record Run(List<Card> cards) implements Meld {
                 previous = iterator.previous();
                 iterator.next();
             }
-            Card current = iterator.next();
+            var current = iterator.next();
             if (previous == null) {
                 continue;
             }
@@ -70,7 +70,7 @@ public record Run(List<Card> cards) implements Meld {
 
     @Override
     public String toString() {
-        return  suit() + "[" + cards.stream()
+        return suit() + "[" + cards.stream()
                 .map(Card::rank)
                 .map(Rank::toString)
                 .collect(Collectors.joining(",")) + "]";

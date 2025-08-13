@@ -37,9 +37,6 @@ class HandTest {
     public void getLayOutFromRunOfLength4IgnoresMultipleDuplicates(){
         var hand = new Hand(Config.STANDARD.points(), List.of(D10, DJ, DQ, DK, DA, D10, DQ, DA));
         var result = hand.getLayOuts();
-        for(var l : result){
-            System.err.println(l);
-        }
         assertEquals(3, result.size());
         assertTrue(result.contains(new LayOut(new Run(D10, DJ, DQ, DK, DA), List.of(), List.of(D10, DQ, DA))));
         assertTrue(result.contains(new LayOut(new Run(D10, DJ, DQ), List.of(new Run(DQ, DK, DA)), List.of(D10, DA))));

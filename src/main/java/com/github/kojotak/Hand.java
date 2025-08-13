@@ -171,8 +171,8 @@ public class Hand {
                     List<Card> run = new ArrayList<>();
                     int jokerIdx = 0;
                     boolean valid = true;
-                    int idxInCore = 0;
-                    for (int rk = blockStartOrdinal; rk <= blockEndOrdinal; rk++) {
+                    var idxInCore = 0;
+                    for (var rk = blockStartOrdinal; rk <= blockEndOrdinal; rk++) {
                         if (idxInCore < runOrdinals.size() && runOrdinals.get(idxInCore) == rk) {
                             run.add(runCore.get(idxInCore));
                             idxInCore++;
@@ -186,9 +186,9 @@ public class Hand {
                     }
                     if (valid && run.size() >= Meld.MINIMUM_LENGTH) {
                         // Remove the run's cards and its jokers
-                        List<Card> removeRun = run.stream().toList();
-                        List<Card> remainingCards = new ArrayList<>(cards);
-                        for (Card rc : removeRun) {
+                        var removeRun = run.stream().toList();
+                        var remainingCards = new ArrayList<>(cards);
+                        for (var rc : removeRun) {
                             remainingCards.remove(rc);
                         }
                         for (Remaining rem : getRemainingMelds(remainingCards)) {

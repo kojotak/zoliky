@@ -12,7 +12,9 @@ import java.util.Objects;
  * Joker in hand is without a rank (it matches all ranks), but when used in {@link Meld} it needs rank to be set.
  */
 public record Card(
+
         @Nullable Rank rank, @Nullable Suit suit
+
 ) implements Comparable<Card> {
 
     public static final Card JOKER = new Card(null, null);

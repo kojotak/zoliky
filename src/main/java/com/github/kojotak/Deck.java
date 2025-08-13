@@ -13,9 +13,9 @@ public class Deck {
 
     public Deck(Config config) {
         this.config = config;
-        for (int i = 0; i < config.packs(); i++) {
-            for (Suit suit : Suit.values()) {
-                for (Rank rank : Rank.values()) {
+        for (var i = 0; i < config.packs(); i++) {
+            for (var suit : Suit.values()) {
+                for (var rank : Rank.values()) {
                     cards.add(new Card(rank, suit));
                 }
             }
