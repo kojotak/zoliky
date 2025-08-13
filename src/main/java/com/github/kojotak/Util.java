@@ -30,10 +30,11 @@ class Util {
     }
 
     static List<Card> difference(List<Card> origin, List<Card> toSubtract) {
-        var result = new LinkedList<Card>(origin);
+        var result = new LinkedList<>(origin);
         for(Card card : toSubtract) {
             result.remove(card);
         }
+        result.sort(Card::compareTo);
         return result;
     }
 }

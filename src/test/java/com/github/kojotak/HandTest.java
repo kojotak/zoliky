@@ -20,7 +20,7 @@ class HandTest {
         var hand = new Hand(Config.STANDARD.points(), List.of(C10, CJ, CQ, CK, CA));
         var layOuts = hand.getLayOuts();
         assertEquals(1, layOuts.size());
-        assertEquals(new Run(List.of(C10, CJ, CQ, CK, CA)), layOuts.getFirst().cleanRun());
+        assertEquals(new Run(C10, CJ, CQ, CK, CA), layOuts.getFirst().cleanRun());
         assertEquals(List.of(), layOuts.getFirst().dump());
     }
 
@@ -29,17 +29,33 @@ class HandTest {
         var hand = new Hand(Config.STANDARD.points(), List.of(C10, CJ, CQ, CK, CA, CA));
         var layOuts = hand.getLayOuts();
         assertEquals(1, layOuts.size());
-        assertEquals(new Run(List.of(C10, CJ, CQ, CK, CA)), layOuts.getFirst().cleanRun());
+        assertEquals(new Run(C10, CJ, CQ, CK, CA), layOuts.getFirst().cleanRun());
         assertEquals(List.of(CA), layOuts.getFirst().dump());
     }
 
     @Test
     public void getLayOutFromRunOfLength4IgnoresMultipleDuplicates(){
         var hand = new Hand(Config.STANDARD.points(), List.of(D10, DJ, DQ, DK, DA, D10, DQ, DA));
+        var result = hand.getLayOuts();
+        for(var l : result){
+            System.err.println(l);
+        }
+        assertEquals(3, result.size());
+        assertTrue(result.contains(new LayOut(new Run(D10, DJ, DQ, DK, DA), List.of(), List.of(D10, DQ, DA))));
+        assertTrue(result.contains(new LayOut(new Run(D10, DJ, DQ), List.of(new Run(DQ, DK, DA)), List.of(D10, DA))));
+        assertTrue(result.contains(new LayOut(new Run(DQ, DK, DA), List.of(new Run(D10, DJ, DQ)), List.of(D10, DA))));
+    }
+
+    @Test
+    public void getLayOutFromRunOfLength4WithMultipleDuplicates(){
+        var hand = new Hand(Config.STANDARD.points(), List.of(D10, DJ, DQ, DK, DA, D10, DJ, DQ, DK, DA));
         var layOuts = hand.getLayOuts();
-        assertEquals(1, layOuts.size());
-        assertEquals(new Run(List.of(D10, DJ, DQ, DK, DA)), layOuts.getFirst().cleanRun());
-        assertEquals(List.of(D10, DQ, DA), layOuts.getFirst().dump());
+        assertTrue(layOuts.size() > 1);
+        //best layOut: two runs of length 5, 2*50 = 100 points
+        var layOut = layOuts.stream().filter( l -> l.points() == 100).findFirst().orElseThrow();
+        assertEquals(new Run(D10, DJ, DQ, DK, DA), layOut.cleanRun());
+        assertEquals(List.of(), layOut.dump());
+        assertEquals(List.of(new Run(D10, DJ, DQ, DK, DA)), layOut.melds());
     }
 
     @Test

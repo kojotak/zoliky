@@ -43,7 +43,7 @@ public record Run(List<Card> cards) implements Meld {
                 previousOrdinal = -1;
             }
             if (previousOrdinal + 1 != currentOrdinal) {
-                throw new IllegalStateException("Illegal run - missing some predecessor or successor");
+                throw new IllegalStateException("Illegal run - missing some predecessor or successor for " + cards);
             }
         }
 

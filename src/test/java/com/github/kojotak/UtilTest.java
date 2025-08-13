@@ -2,6 +2,7 @@ package com.github.kojotak;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -56,8 +57,10 @@ class UtilTest {
 
     @Test
     public void differenceWithEmptyIsTheOrigin(){
-        var origin = List.of(SA, SK, JOKER);
+        var origin = Arrays.asList(SA, SK, JOKER);
+        origin.sort(Card::compareTo);
         var difference = Util.difference(origin, List.of());
+        difference.sort(Card::compareTo);
         assertEquals(origin, difference);
     }
 
