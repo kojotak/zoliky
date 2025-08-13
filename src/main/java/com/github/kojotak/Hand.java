@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
  */
 public class Hand {
 
-    private final LinkedList<Card> cards = new LinkedList<>();
+    private final List<Card> cards = new LinkedList<>();
 
-    public Hand() {}
     public Hand(List<Card> cards) {
         this.cards.addAll(cards);
+        this.cards.sort(Card::compareTo);
     }
 
     public List<Card> getCards(){

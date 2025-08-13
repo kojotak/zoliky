@@ -3,6 +3,8 @@ package com.github.kojotak;
 
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Represents a card.
  * <p/>
@@ -11,7 +13,7 @@ import org.jspecify.annotations.Nullable;
  */
 public record Card(
         @Nullable Rank rank, @Nullable Suit suit
-) {
+) implements Comparable<Card> {
 
     public static final Card JOKER = new Card(null, null);
 
@@ -85,4 +87,31 @@ public record Card(
                 ? "JOKER"
                 : "" + rank + suit;
     }
+
+    @Override
+    public int compareTo(Card other) {
+        Objects.requireNonNull(other, "other");
+
+        // 1) Jokers first
+        boolean j1 = this.isJoker();
+        boolean j2 = other.isJoker();
+        if (j1 != j2) return j1 ? -1 : 1; //one of them is joker
+        if (j1) return 0; // both are jokers
+
+        // 2) compare suits
+        int suitCmp = this.getSuitOrder().compareTo(other.getSuitOrder());
+        if (suitCmp != 0) return suitCmp;
+
+        // 3) comapre ranks
+        return this.getRankOrder().compareTo(other.getRankOrder());
+    }
+
+    private Integer getRankOrder(){
+        return rank == null ? -1 : rank.ordinal();
+    }
+
+    private Integer getSuitOrder(){
+        return suit == null ? -1 : suit.ordinal();
+    }
+
 }

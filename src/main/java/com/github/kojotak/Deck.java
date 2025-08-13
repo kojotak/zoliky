@@ -3,6 +3,8 @@ package com.github.kojotak;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -30,11 +32,11 @@ public class Deck {
     }
 
     public Hand drawHand() {
-        var hand = new Hand();
-        for (int i = 0; i < config.cards(); i++) {
-            hand.getCards().add(cards.poll());
-        }
-        return hand;
+        return new Hand(IntStream.range(0, config.cards())
+                .mapToObj(i -> cards.poll())
+                .filter(Objects::nonNull)
+                .toList()
+        );
     }
 
 }
