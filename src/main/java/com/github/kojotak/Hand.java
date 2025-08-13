@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
  */
 public class Hand {
 
+    private final int minimumPoints;
     private final List<Card> cards = new LinkedList<>();
 
-    public Hand(List<Card> cards) {
+    public Hand(int minimumPoints, List<Card> cards) {
+        this.minimumPoints = minimumPoints;
         this.cards.addAll(cards);
         this.cards.sort(Card::compareTo);
     }
@@ -76,7 +78,10 @@ public class Hand {
                                 cleanRun.add(byRank.get(rank).get(0));
                             }
                             var remaining = Util.difference(cards, cleanRun);
-                            layOuts.add(new LayOut(new Run(cleanRun), remaining));
+                            var layout = new LayOut(new Run(cleanRun), remaining);
+                            if(layout.getPoints() >= minimumPoints){
+                                layOuts.add(layout);
+                            }
                         }
                     }
                 }

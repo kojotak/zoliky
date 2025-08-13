@@ -3,6 +3,7 @@ package com.github.kojotak;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -29,6 +30,10 @@ class Util {
     }
 
     static List<Card> difference(List<Card> origin, List<Card> toSubtract) {
-        return origin.stream().filter( card -> !toSubtract.contains(card)).toList();
+        var result = new LinkedList<Card>(origin);
+        for(Card card : toSubtract) {
+            result.remove(card);
+        }
+        return result;
     }
 }

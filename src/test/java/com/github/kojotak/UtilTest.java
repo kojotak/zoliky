@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.function.Function;
 
+import static com.github.kojotak.Card.*;
 import static com.github.kojotak.Util.uniqueSetOrFail;
 import static com.github.kojotak.Util.uniqueOrFail;
 import static java.util.Arrays.asList;
@@ -48,15 +49,22 @@ class UtilTest {
 
     @Test
     public void differenceSomeCards(){
-        var origin = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.KING, Suit.CLUB));
-        var difference = Util.difference(origin, List.of(new Card(Rank.ACE, Suit.CLUB)));
-        assertEquals(List.of(new Card(Rank.KING, Suit.CLUB)), difference);
+        var origin = List.of(CA, CK);
+        var difference = Util.difference(origin, List.of(CA));
+        assertEquals(List.of(CK), difference);
     }
 
     @Test
     public void differenceWithEmptyIsTheOrigin(){
-        var origin = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.KING, Suit.CLUB), Card.JOKER);
+        var origin = List.of(SA, SK, JOKER);
         var difference = Util.difference(origin, List.of());
         assertEquals(origin, difference);
+    }
+
+    @Test
+    public void differenceDuplicateCards(){
+        var origin = List.of(HA, HA, HK, HQ);
+        var difference = Util.difference(origin, List.of(HQ, HK, HA));
+        assertEquals(List.of(HA), difference);
     }
 }

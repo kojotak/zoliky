@@ -32,7 +32,7 @@ public class Deck {
     }
 
     public Hand drawHand() {
-        return new Hand(IntStream.range(0, config.cards())
+        return new Hand(config.points(), IntStream.range(0, config.cards())
                 .mapToObj(i -> cards.poll())
                 .filter(Objects::nonNull)
                 .toList()

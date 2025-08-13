@@ -9,37 +9,49 @@ import static org.junit.jupiter.api.Assertions.*;
 class HandTest {
 
     @Test
-    public void getLayOutFromRun(){
-        var hand = new Hand(List.of(CJ, CQ, CK));
+    public void getLayOutFromRunUnsufficientPoints(){
+        var hand = new Hand(Config.STANDARD.points(), List.of(CJ, CQ, CK));
         var layOuts = hand.getLayOuts();
-        assertEquals(1, layOuts.size());
-        assertEquals(new Run(List.of(CJ, CQ, CK)), layOuts.getFirst().cleanRun());
-        assertEquals(List.of(), layOuts.getFirst().dump());
+        assertTrue(layOuts.isEmpty());
     }
 
     @Test
     public void getLayOutFromRunOfLength4(){
-        var hand = new Hand(List.of(CJ, CQ, CK, CA));
+        var hand = new Hand(Config.STANDARD.points(), List.of(C10, CJ, CQ, CK, CA));
         var layOuts = hand.getLayOuts();
-        assertEquals(3, layOuts.size());
-        assertEquals(new Run(List.of(CJ, CQ, CK)), layOuts.getFirst().cleanRun());
-        assertEquals(new Run(List.of(CJ, CQ, CK, CA)), layOuts.get(1).cleanRun());
-        assertEquals(new Run(List.of(CQ, CK, CA)), layOuts.get(2).cleanRun());
+        assertEquals(1, layOuts.size());
+        assertEquals(new Run(List.of(C10, CJ, CQ, CK, CA)), layOuts.getFirst().cleanRun());
+        assertEquals(List.of(), layOuts.getFirst().dump());
+    }
+
+    @Test
+    public void getLayOutFromRunOfLength4IgnoresDuplicates(){
+        var hand = new Hand(Config.STANDARD.points(), List.of(C10, CJ, CQ, CK, CA, CA));
+        var layOuts = hand.getLayOuts();
+        assertEquals(1, layOuts.size());
+        assertEquals(new Run(List.of(C10, CJ, CQ, CK, CA)), layOuts.getFirst().cleanRun());
         assertEquals(List.of(CA), layOuts.getFirst().dump());
-        assertEquals(List.of(), layOuts.get(1).dump());
-        assertEquals(List.of(CJ), layOuts.get(2).dump());
+    }
+
+    @Test
+    public void getLayOutFromRunOfLength4IgnoresMultipleDuplicates(){
+        var hand = new Hand(Config.STANDARD.points(), List.of(D10, DJ, DQ, DK, DA, D10, DQ, DA));
+        var layOuts = hand.getLayOuts();
+        assertEquals(1, layOuts.size());
+        assertEquals(new Run(List.of(D10, DJ, DQ, DK, DA)), layOuts.getFirst().cleanRun());
+        assertEquals(List.of(D10, DQ, DA), layOuts.getFirst().dump());
     }
 
     @Test
     public void noLayOutFromImpossibleHand(){
-        var hand = new Hand(List.of(HJ, CQ, DK, SA));
+        var hand = new Hand(Config.STANDARD.points(), List.of(HJ, CQ, DK, SA));
         var layOuts = hand.getLayOuts();
         assertTrue(layOuts.isEmpty());
     }
 
     @Test
     public void noLayOutFromRunWithJoker(){
-        var hand = new Hand(List.of(HJ, JOKER, HK));
+        var hand = new Hand(Config.STANDARD.points(), List.of(HJ, JOKER, HK));
         var layOuts = hand.getLayOuts();
         assertTrue(layOuts.isEmpty());
     }
