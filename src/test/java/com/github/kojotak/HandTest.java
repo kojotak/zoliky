@@ -56,6 +56,18 @@ class HandTest {
     }
 
     @Test
+    public void getLayOutWithSetsWithJoker(){
+        var hand = new Hand(Config.STANDARD.points(), List.of(DQ, DK, DA, C7, H7, JOKER));
+        var layOuts = hand.getLayOuts();
+        assertEquals(1, layOuts.size());
+        var layOut = layOuts.getFirst();
+        assertEquals(51, layOut.points());
+        assertEquals(new Run(DQ, DK, DA), layOut.cleanRun());
+        assertEquals(List.of(), layOuts.getFirst().dump());
+        assertEquals(List.of(new Set(JOKER, C7, H7)), layOut.melds());
+    }
+
+    @Test
     public void noLayOutFromImpossibleHand(){
         var hand = new Hand(Config.STANDARD.points(), List.of(HJ, CQ, DK, SA));
         var layOuts = hand.getLayOuts();

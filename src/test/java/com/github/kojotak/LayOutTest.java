@@ -15,7 +15,7 @@ class LayOutTest {
        new Run(D2, D3, D4),
        List.of(
                new Run(S7, jokerFor(Rank.EIGHT), S9),
-               new Set(Rank.ACE, List.of(Suit.CLUB, Suit.DIAMOND, Suit.HEART))
+               new Set(CA, DA, HA)
        ),
        List.of(HQ, JOKER, SA)
      );
