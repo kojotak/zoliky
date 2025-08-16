@@ -25,6 +25,16 @@ class SetTest {
     }
 
     @Test
+    public void illegalSetWithFourSuitsAndJoker(){
+        assertThrows(IllegalStateException.class, () -> new Set(CA, HA, CA, DA, JOKER));
+    }
+
+    @Test
+    public void illegalSetWithThreeSuitsAndTwoJokers(){
+        assertThrows(IllegalStateException.class, () -> new Set(CA, JOKER, CA, JOKER, DA));
+    }
+
+    @Test
     public void illegalSetOfTwoSuits(){
         assertThrows(IllegalStateException.class, () -> new Set(CA, SA));
     }
