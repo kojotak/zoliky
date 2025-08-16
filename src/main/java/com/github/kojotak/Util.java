@@ -14,7 +14,7 @@ class Util {
         var result = new HashSet<T>();
         for (T item : list) {
             if (!result.add(item)) {
-                throw new IllegalStateException("Found duplicate item " + item);
+                throw new IllegalStateException("Found duplicate item " + item + " from " + list);
             }
         }
         return result;
