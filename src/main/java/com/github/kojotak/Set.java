@@ -14,7 +14,7 @@ public record Set(List<Card> cards) implements Meld {
 
     public Set {
         uniqueOrFail(cards, Card::rank);
-        uniqueSetOrFail(cards.stream().map(Card::suit).filter(Objects::nonNull).toList());
+        uniqueSetOrFail(cards.stream().map(Card::suit).filter(StandardSuit.class::isInstance).toList());
         if (cards.size() < MINIMUM_LENGTH) {
             throw new IllegalStateException("Illegal set - minimum length violated");
         }

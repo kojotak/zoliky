@@ -11,7 +11,7 @@ public record Run(List<Card> cards) implements Meld {
         this(List.of(cards));
     }
 
-    public Run(Suit suit, List<Rank> ranks) {
+    public Run(StandardSuit suit, List<Rank> ranks) {
         this(ranks.stream().map(r -> new Card(r, suit)).toList());
     }
 
@@ -64,7 +64,7 @@ public record Run(List<Card> cards) implements Meld {
         return points;
     }
 
-    public Suit suit() {
+    public Enum<? extends Suit> suit() {
         return uniqueOrFail(cards, Card::suit);
     }
 

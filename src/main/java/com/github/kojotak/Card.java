@@ -5,78 +5,75 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
-/**
- * Represents a card.
- * <p/>
- * Joker is always card without suit (it matches all suits).
- * Joker in hand is without a rank (it matches all ranks), but when used in {@link Meld} it needs rank to be set.
- */
+import static com.github.kojotak.Rank.*;
+import static com.github.kojotak.StandardSuit.*;
+
 public record Card(
 
-        @Nullable Rank rank, @Nullable Suit suit
+        @Nullable Rank rank, Enum<? extends Suit> suit
 
 ) implements Comparable<Card> {
 
-    public static final Card JOKER = new Card(null, null);
+    public static final Card JOKER = new Card(null, SpecialSuit.JOKER);
 
-    public static final Card H2 = new Card(Rank.TWO, Suit.HEART);
-    public static final Card H3 = new Card(Rank.THREE, Suit.HEART);
-    public static final Card H4 = new Card(Rank.FOUR, Suit.HEART);
-    public static final Card H5 = new Card(Rank.FIVE, Suit.HEART);
-    public static final Card H6 = new Card(Rank.SIX, Suit.HEART);
-    public static final Card H7 = new Card(Rank.SEVEN, Suit.HEART);
-    public static final Card H8 = new Card(Rank.EIGHT, Suit.HEART);
-    public static final Card H9 = new Card(Rank.NINE, Suit.HEART);
-    public static final Card H10 = new Card(Rank.TEN, Suit.HEART);
-    public static final Card HJ = new Card(Rank.JACK, Suit.HEART);
-    public static final Card HQ = new Card(Rank.QUEEN, Suit.HEART);
-    public static final Card HK = new Card(Rank.KING, Suit.HEART);
-    public static final Card HA = new Card(Rank.ACE, Suit.HEART);
+    public static final Card H2 = new Card(TWO, HEART);
+    public static final Card H3 = new Card(THREE, HEART);
+    public static final Card H4 = new Card(FOUR, HEART);
+    public static final Card H5 = new Card(FIVE, HEART);
+    public static final Card H6 = new Card(SIX, HEART);
+    public static final Card H7 = new Card(SEVEN, HEART);
+    public static final Card H8 = new Card(EIGHT, HEART);
+    public static final Card H9 = new Card(NINE, HEART);
+    public static final Card H10 = new Card(TEN, HEART);
+    public static final Card HJ = new Card(JACK, HEART);
+    public static final Card HQ = new Card(QUEEN, HEART);
+    public static final Card HK = new Card(KING, HEART);
+    public static final Card HA = new Card(ACE, HEART);
 
-    public static final Card C2 = new Card(Rank.TWO, Suit.CLUB);
-    public static final Card C3 = new Card(Rank.THREE, Suit.CLUB);
-    public static final Card C4 = new Card(Rank.FOUR, Suit.CLUB);
-    public static final Card C5 = new Card(Rank.FIVE, Suit.CLUB);
-    public static final Card C6 = new Card(Rank.SIX, Suit.CLUB);
-    public static final Card C7 = new Card(Rank.SEVEN, Suit.CLUB);
-    public static final Card C8 = new Card(Rank.EIGHT, Suit.CLUB);
-    public static final Card C9 = new Card(Rank.NINE, Suit.CLUB);
-    public static final Card C10 = new Card(Rank.TEN, Suit.CLUB);
-    public static final Card CJ = new Card(Rank.JACK, Suit.CLUB);
-    public static final Card CQ = new Card(Rank.QUEEN, Suit.CLUB);
-    public static final Card CK = new Card(Rank.KING, Suit.CLUB);
-    public static final Card CA = new Card(Rank.ACE, Suit.CLUB);
+    public static final Card C2 = new Card(TWO, CLUB);
+    public static final Card C3 = new Card(THREE, CLUB);
+    public static final Card C4 = new Card(FOUR, CLUB);
+    public static final Card C5 = new Card(FIVE, CLUB);
+    public static final Card C6 = new Card(SIX, CLUB);
+    public static final Card C7 = new Card(SEVEN, CLUB);
+    public static final Card C8 = new Card(EIGHT, CLUB);
+    public static final Card C9 = new Card(NINE, CLUB);
+    public static final Card C10 = new Card(TEN, CLUB);
+    public static final Card CJ = new Card(JACK, CLUB);
+    public static final Card CQ = new Card(QUEEN, CLUB);
+    public static final Card CK = new Card(KING, CLUB);
+    public static final Card CA = new Card(ACE, CLUB);
 
-    public static final Card D2 = new Card(Rank.TWO, Suit.DIAMOND);
-    public static final Card D3 = new Card(Rank.THREE, Suit.DIAMOND);
-    public static final Card D4 = new Card(Rank.FOUR, Suit.DIAMOND);
-    public static final Card D5 = new Card(Rank.FIVE, Suit.DIAMOND);
-    public static final Card D6 = new Card(Rank.SIX, Suit.DIAMOND);
-    public static final Card D7 = new Card(Rank.SEVEN, Suit.DIAMOND);
-    public static final Card D8 = new Card(Rank.EIGHT, Suit.DIAMOND);
-    public static final Card D9 = new Card(Rank.NINE, Suit.DIAMOND);
-    public static final Card D10 = new Card(Rank.TEN, Suit.DIAMOND);
-    public static final Card DJ = new Card(Rank.JACK, Suit.DIAMOND);
-    public static final Card DQ = new Card(Rank.QUEEN, Suit.DIAMOND);
-    public static final Card DK = new Card(Rank.KING, Suit.DIAMOND);
-    public static final Card DA = new Card(Rank.ACE, Suit.DIAMOND);
+    public static final Card D2 = new Card(TWO, DIAMOND);
+    public static final Card D3 = new Card(THREE, DIAMOND);
+    public static final Card D4 = new Card(FOUR, DIAMOND);
+    public static final Card D5 = new Card(FIVE, DIAMOND);
+    public static final Card D6 = new Card(SIX, DIAMOND);
+    public static final Card D7 = new Card(SEVEN, DIAMOND);
+    public static final Card D8 = new Card(EIGHT, DIAMOND);
+    public static final Card D9 = new Card(NINE, DIAMOND);
+    public static final Card D10 = new Card(TEN, DIAMOND);
+    public static final Card DJ = new Card(JACK, DIAMOND);
+    public static final Card DQ = new Card(QUEEN, DIAMOND);
+    public static final Card DK = new Card(KING, DIAMOND);
+    public static final Card DA = new Card(ACE, DIAMOND);
 
-    public static final Card S2 = new Card(Rank.TWO, Suit.SPADE);
-    public static final Card S3 = new Card(Rank.THREE, Suit.SPADE);
-    public static final Card S4 = new Card(Rank.FOUR, Suit.SPADE);
-    public static final Card S5 = new Card(Rank.FIVE, Suit.SPADE);
-    public static final Card S6 = new Card(Rank.SIX, Suit.SPADE);
-    public static final Card S7 = new Card(Rank.SEVEN, Suit.SPADE);
-    public static final Card S8 = new Card(Rank.EIGHT, Suit.SPADE);
-    public static final Card S9 = new Card(Rank.NINE, Suit.SPADE);
-    public static final Card S10 = new Card(Rank.TEN, Suit.SPADE);
-    public static final Card SJ = new Card(Rank.JACK, Suit.SPADE);
-    public static final Card SQ = new Card(Rank.QUEEN, Suit.SPADE);
-    public static final Card SK = new Card(Rank.KING, Suit.SPADE);
-    public static final Card SA = new Card(Rank.ACE, Suit.SPADE);
+    public static final Card S2 = new Card(TWO, SPADE);
+    public static final Card S3 = new Card(THREE, SPADE);
+    public static final Card S4 = new Card(FOUR, SPADE);
+    public static final Card S5 = new Card(FIVE, SPADE);
+    public static final Card S6 = new Card(SIX, SPADE);
+    public static final Card S7 = new Card(SEVEN, SPADE);
+    public static final Card S8 = new Card(EIGHT, SPADE);
+    public static final Card S9 = new Card(NINE, SPADE);
+    public static final Card S10 = new Card(TEN, SPADE);
+    public static final Card SJ = new Card(JACK, SPADE);
+    public static final Card SQ = new Card(QUEEN, SPADE);
+    public static final Card SK = new Card(KING, SPADE);
+    public static final Card SA = new Card(ACE, SPADE);
 
     public boolean isJoker() {
-        return suit == null;
+        return SpecialSuit.JOKER.equals(suit);
     }
 
     public static Card jokerFor(Rank rank){
@@ -113,7 +110,7 @@ public record Card(
     }
 
     private Integer getSuitOrder(){
-        return suit == null ? -1 : suit.ordinal();
+        return suit.ordinal();
     }
 
 }
